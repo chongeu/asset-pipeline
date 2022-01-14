@@ -12,6 +12,10 @@ class AssetPipelineController extends Controller
 	 */
 	public function file($path)
 	{
+		if (strpos($path, "..") !== false) {
+			App::abort(404);
+		}
+
 		$absolutePath = Asset::isJavascript($path);
 		if ($absolutePath) {
 			return $this->javascript($absolutePath);
